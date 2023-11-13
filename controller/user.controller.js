@@ -146,7 +146,7 @@ const UserController = {
 
       console.log(payload)
       await UserService.updateUser(user.id,payload)
-      let updated_user = UserService.getUserInfoById(user.id)
+      let updated_user = await UserService.getUserInfoById(user.id)
       return res.status(200).send({
         status: 200,
         data: updated_user
@@ -202,14 +202,14 @@ const UserController = {
         return res.status(200).send({
           status:200,
           data:{
-            is_login: false
+            user: null
           }
         })
       }
       return res.status(200).send({
         status:200,
         data:{
-          is_login: true
+          user: user
         }
       })
     }catch(err){
@@ -219,7 +219,6 @@ const UserController = {
       })
     }
   }
-
 };
 
 export default UserController
