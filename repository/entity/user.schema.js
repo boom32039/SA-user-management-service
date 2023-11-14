@@ -48,6 +48,14 @@ let UserSchemas = new EntitySchema({
         },
         is_active:{
             type:"bool"
+        },
+        check_in_id:{
+            type:"int",
+            nullable:true
+        },
+        table_id: {
+            type:"varchar",
+            nullable:true
         }
     }
 })

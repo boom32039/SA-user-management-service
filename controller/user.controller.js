@@ -3,6 +3,12 @@ import jwt from "jsonwebtoken"
 import jwt_decode from "jwt-decode"
 import { User } from "../repository/model/user.model.js";
 
+const generateToken = (payload, type = null) => {
+  if (type)
+    return jwt.sign(payload, PRIVATE_KEY, { expiresIn: REFRESH_EXPIRE })
+  return jwt.sign(payload, PRIVATE_KEY, { expiresIn: ACCESS_EXPIRE })
+}
+
 
 const UserController = {
 	async register(req, res, next) {
@@ -116,12 +122,6 @@ const UserController = {
       const ACCESS_EXPIRE = "30d"
       const REFRESH_EXPIRE = "7d"
 
-      const generateToken = (payload, type = null) => {
-        if (type)
-          return jwt.sign(payload, PRIVATE_KEY, { expiresIn: REFRESH_EXPIRE })
-        return jwt.sign(payload, PRIVATE_KEY, { expiresIn: ACCESS_EXPIRE })
-      }
-
       let [token,refresh] = [
         generateToken({
           username: user.username,
@@ -218,7 +218,7 @@ const UserController = {
         message: "Internal Server Error"
       })
     }
-  }
+  },
 };
 
 export default UserController
